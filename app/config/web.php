@@ -1,20 +1,26 @@
 <?php
 
+use yii\helpers\BaseInflector;
+use yii\web\UrlNormalizer;
+
 $params = require(__DIR__ . '/params.php');
+$db = require(__DIR__ . '/db.php');
+$transliteration = require(__DIR__ . '/transliteration.php');
 
 $basePath =  dirname(__DIR__);
 $webroot = dirname($basePath);
+
+BaseInflector::$transliteration = array_merge(BaseInflector::$transliteration, $transliteration);
 
 $config = [
     'id' => 'app',
     'basePath' => $basePath,
     'bootstrap' => ['log'],
-    'language' => 'en-US',
+    'language' => 'ru-RU',
     'runtimePath' => $webroot . '/runtime',
     'vendorPath' => $webroot . '/vendor',
     'components' => [
         'request' => [
-            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '',
         ],
         'cache' => [
@@ -27,6 +33,10 @@ $config = [
             'class' => 'yii\swiftmailer\Mailer',
         ],
         'urlManager' => [
+            'normalizer' => [
+                'class' => 'yii\web\UrlNormalizer',
+                'action' => UrlNormalizer::ACTION_REDIRECT_PERMANENT,
+            ],
             'rules' => [
                 '<controller:\w+>/view/<slug:[\w-]+>' => '<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
@@ -34,19 +44,7 @@ $config = [
             ],
         ],
         'assetManager' => [
-            // uncomment the following line if you want to auto update your assets (unix hosting only)
-            //'linkAssets' => true,
-            'bundles' => [
-                'yii\web\JqueryAsset' => [
-                    'js' => [YII_DEBUG ? 'jquery.js' : 'jquery.min.js'],
-                ],
-                'yii\bootstrap\BootstrapAsset' => [
-                    'css' => [YII_DEBUG ? 'css/bootstrap.css' : 'css/bootstrap.min.css'],
-                ],
-                'yii\bootstrap\BootstrapPluginAsset' => [
-                    'js' => [YII_DEBUG ? 'js/bootstrap.js' : 'js/bootstrap.min.js'],
-                ],
-            ],
+            'forceCopy' => YII_ENV_DEV,
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -57,13 +55,12 @@ $config = [
                 ],
             ],
         ],
-        'db' => require(__DIR__ . '/db.php'),
+        'db' => $db,
     ],
     'params' => $params,
 ];
 
 if (YII_ENV_DEV) {
-    // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = 'yii\debug\Module';
 
@@ -73,4 +70,4 @@ if (YII_ENV_DEV) {
     $config['components']['db']['enableSchemaCache'] = false;
 }
 
-return array_merge_recursive($config, require($webroot . '/vendor/noumo/easyii/config/easyii.php'));
+return array_merge_recursive($config, require($webroot . '/vendor/chehivskiy/easyii-plus/config/web.php'));

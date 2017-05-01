@@ -1,4 +1,5 @@
 <?php
+
 namespace app\assets;
 
 class AppAsset extends \yii\web\AssetBundle

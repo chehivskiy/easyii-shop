@@ -1,25 +1,29 @@
 {
-    "name": "noumo/easyii-shop",
+    "name": "chehivskiy/easyii-shop",
     "description": "Easyiicms simple shop with examples of all modules",
-    "keywords": ["yii2", "cms", "control panel", "admin", "easy", "shop"],
+    "keywords": ["yii2", "cms", "control panel", "admin", "easy", "easy-plus", "shop"],
     "homepage": "http://easyiicms.com",
     "type": "project",
     "license": "GNU GPL V3",
     "support": {
         "wiki": "http://easyiicms.com/docs",
-        "source": "https://github.com/noumo/easyii-shop.git",
-        "issues": "https://github.com/noumo/easyii-shop/issues"
+        "source": "https://github.com/chehivskiy/easyii-shop.git",
+        "issues": "https://github.com/chehivskiy/easyii-shop/issues"
     },
     "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@git.devsrv.pw:chehivskiy/easyii-plus.git"
+        }
+    ],
     "require": {
         "php": ">=5.4.0",
-        "noumo/easyii": "dev-master"
+        "chehivskiy/easyii-plus": "dev-master"
     },
     "require-dev": {
-        "yiisoft/yii2-codeception": "*",
         "yiisoft/yii2-debug": "*",
-        "yiisoft/yii2-gii": "*",
-        "yiisoft/yii2-faker": "*"
+        "yiisoft/yii2-gii": "*"
     },
     "scripts": {
         "post-create-project-cmd": [

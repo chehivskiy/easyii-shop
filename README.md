@@ -26,4 +26,10 @@ vendor/             contains dependent 3rd-party packages
 
 #### Contacts ####
 
+#### Install CMS ####
+Installation CMS with default configuration
+ ```
+php yii install
+```
+
 Feel free to email me on noumohope@gmail.com

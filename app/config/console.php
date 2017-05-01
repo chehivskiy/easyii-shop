@@ -1,11 +1,19 @@
 <?php
+
+use yii\helpers\BaseInflector;
+
 $params = require(__DIR__ . '/params.php');
 $db = require(__DIR__ . '/db.php');
+$transliteration = require(__DIR__ . '/transliteration.php');
 
 $basePath =  dirname(__DIR__);
 $webroot = dirname($basePath);
 
-return [
+BaseInflector::$transliteration = array_merge(BaseInflector::$transliteration, $transliteration);
+
+Yii::setAlias('@webroot', $webroot);
+
+$config = [
     'id' => 'app-console',
     'basePath' => $basePath,
     'runtimePath' => $webroot . '/runtime',
@@ -31,3 +39,5 @@ return [
     ],
     'params' => $params,
 ];
+
+return array_merge_recursive($config, require($webroot . '/vendor/chehivskiy/easyii-plus/config/console.php'));
